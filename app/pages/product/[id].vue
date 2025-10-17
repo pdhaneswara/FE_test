@@ -29,7 +29,7 @@ onMounted(fetchProduct)
 
 <template>
   <div class="bg-white py-4">
-    <div class="container mx-auto">
+    <div class="container mx-auto px-4 lg:px-0">
 
       <!-- 🧭 Breadcrumb -->
       <nav class="text-sm mb-6 text-gray-500">

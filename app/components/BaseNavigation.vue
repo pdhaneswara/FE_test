@@ -45,7 +45,7 @@ const handleBlur = () => {
 
 <template>
   <header class="py-4 header-shadow sticky top-0 bg-white">
-    <nav class="flex container mx-auto items-center">
+    <nav class="flex container mx-auto items-center px-4 lg:px-0">
       <div class="flex items-center">
         <NuxtLink to="/" class="flex gap-1 items-center">
           <NuxtImg width="56px" src="/icon-green.png" format="webp" alt="" />
