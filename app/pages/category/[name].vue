@@ -1,26 +1,45 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useProducts } from '../../composables/useProducts'
 
 const route = useRoute()
-const { name } = route.params
-
 const { products, loading, fetchProducts } = useProducts()
 
-const selectedCategory = ref(name as string)
+const selectedCategory = ref(route.params.name as string)
 
-// Initial fetch
 onMounted(async () => {
   await fetchProducts(selectedCategory.value)
 })
+
+const pageSize = 8
+const currentPage = ref(1)
+
+const paginatedProducts = computed(() => {
+  const start = (currentPage.value - 1) * pageSize
+  return products.value.slice(start, start + pageSize)
+})
+
+const displayStart = computed(() =>
+  products.value.length ? (currentPage.value - 1) * pageSize + 1 : 0
+)
+const displayEnd = computed(() =>
+  Math.min(currentPage.value * pageSize, products.value.length)
+)
 </script>
 
 <template>
-    <div class="min-h-screen bg-white py-4">
+    <div class="bg-white py-4">
         <div class="container mx-auto">
-            <div class="mb-6">
-                <b class="text-2xl capitalize">{{ selectedCategory }}</b>
+            <div class="mb-6 flex items-center justify-between">
+                <div>
+                    <b class="text-2xl capitalize">{{ selectedCategory }} Product</b>
+                    <p v-if="!loading && products.length" class="text-gray-600 text-sm">
+                        Displaying <b>{{ displayStart }}</b> - <b>{{ displayEnd }}</b> of
+                        <b>{{ products.length }}</b> products
+                    </p>
+                </div>
+                <CategoryDropdown v-model:selectedCategory="selectedCategory" />
             </div>
 
             <!-- Loading -->

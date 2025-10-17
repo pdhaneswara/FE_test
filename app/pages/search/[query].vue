@@ -1,38 +1,68 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useProducts } from '../../composables/useProducts'
 
 const route = useRoute()
+const router = useRouter()
+
 const { products, loading, fetchProducts } = useProducts()
 
 const searchQuery = ref(decodeURIComponent(route.params.query as string))
+const selectedCategory = ref('all')
 
-// Load all products on mount
+// Fetch all products initially
 onMounted(async () => {
   await fetchProducts()
 })
 
-// Watch for route changes (if user searches again)
+// Re-run search when URL param changes
 watch(
   () => route.params.query,
-  (newQuery) => {
+  async (newQuery) => {
     searchQuery.value = decodeURIComponent(newQuery as string)
+    await fetchProducts()
   }
 )
 
-// Filter products by search query
 const filteredProducts = computed(() => {
   const q = searchQuery.value.toLowerCase()
-  return products.value.filter((p) => p.title.toLowerCase().includes(q))
+  let list = products.value.filter((p) => p.title.toLowerCase().includes(q))
+
+  if (selectedCategory.value !== 'all') {
+    list = list.filter((p) => p.category === selectedCategory.value)
+  }
+
+  return list
 })
+
+const pageSize = 8
+const currentPage = ref(1)
+
+const paginatedProducts = computed(() => {
+  const start = (currentPage.value - 1) * pageSize
+  return filteredProducts.value.slice(start, start + pageSize)
+})
+
+const displayStart = computed(() =>
+  filteredProducts.value.length ? (currentPage.value - 1) * pageSize + 1 : 0
+)
+const displayEnd = computed(() =>
+  Math.min(currentPage.value * pageSize, filteredProducts.value.length)
+)
 </script>
 
 <template>
-    <div class="min-h-screen bg-white py-4">
+    <div class="bg-white py-4">
         <div class="container mx-auto">
-            <div class="mb-6">
-                <b class="text-2xl capitalize">Search Results for "{{ searchQuery }}"</b>
+            <div class="mb-6 flex items-center justify-between">
+                <div>
+                    <b class="text-2xl capitalize">Search Results for "{{ searchQuery }}"</b>
+                    <p v-if="!loading && filteredProducts.length" class="text-gray-600 text-sm">
+                        Displaying <b>{{ displayStart }}</b> - <b>{{ displayEnd }}</b> of
+                        <b>{{ filteredProducts.length }}</b> products
+                    </p>
+                </div>
             </div>
 
             <div v-if="loading" class="text-gray-500 text-center py-10">

@@ -1,29 +1,13 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, onMounted, computed } from 'vue'
 import { useProducts } from '../composables/useProducts'
-import { useCategories } from '../composables/useCategories'
 
-const router = useRouter()
-
-const { products, loading: loadingProducts, fetchProducts } = useProducts()
-const { categories, loading: loadingCategories, fetchCategories } = useCategories()
-
+const { products, loading, fetchProducts } = useProducts()
 const selectedCategory = ref('all')
 
-// Fetch data on mount
 onMounted(async () => {
-  await fetchCategories()
   await fetchProducts()
 })
-
-// Handle dropdown change → navigate to category page
-const handleCategoryChange = (e: Event) => {
-  const value = (e.target as HTMLSelectElement).value
-  selectedCategory.value = value
-  if (value === 'all') router.push('/')
-  else router.push(`/category/${value}`)
-}
 </script>
 
 <template>
@@ -40,26 +24,11 @@ const handleCategoryChange = (e: Event) => {
 
                     <!-- Category Dropdown -->
                     <div>
-                        <select
-                        class="border border-gray-300 rounded-lg px-4 py-2 text-gray-700"
-                        @change="handleCategoryChange"
-                        v-model="selectedCategory"
-                        >
-                        <option value="all">All Categories</option>
-                        <option class="capitalize"
-                            v-for="cat in categories"
-                            :key="cat"
-                            :value="cat"
-                        >
-                            {{ cat }}
-                        </option>
-                        </select>
+                        <CategoryDropdown v-model:selectedCategory="selectedCategory" />
                     </div>
                 </div>
                 <!-- Loading -->
-                <div v-if="loadingProducts || loadingCategories" class="text-gray-500 text-center py-10">
-                    Loading...
-                </div>
+                <div v-if="loading" class="text-gray-500 text-center py-10">Loading...</div>
                 <!-- Product Grid -->
                 <div v-else class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     <div
