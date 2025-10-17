@@ -2,7 +2,7 @@
     <div class="flex flex-col h-screen">
         <base-navigation />
         <div class="flex-1 bg-neutral-100">
-            <div class="container mx-auto">
+            <div>
                 <slot />
             </div>
         </div>
