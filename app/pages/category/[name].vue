@@ -47,8 +47,12 @@ const displayEnd = computed(() =>
 
             <!-- Product Grid -->
             <div v-else class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                <div v-for="product in products" :key="product.id"
-                    class="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition">
+                <NuxtLink
+                    v-for="product in products"
+                    :key="product.id"
+                    class="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition"
+                    :to="`/product/${product.id}`"
+                >
                     <img :src="product.image" alt="product.title" class="w-full h-48 object-contain p-4 bg-gray-100" />
                     <div class="p-4">
                         <h2 class="text-lg font-semibold mb-2 truncate">{{ product.title }}</h2>
@@ -58,7 +62,7 @@ const displayEnd = computed(() =>
                             <span class="text-sm text-gray-500 capitalize">{{ product.category }}</span>
                         </div>
                     </div>
-                </div>
+                </NuxtLink>
             </div>
         </div>
     </div>
