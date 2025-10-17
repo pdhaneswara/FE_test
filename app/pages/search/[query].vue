@@ -54,7 +54,7 @@ const displayEnd = computed(() =>
 
 <template>
     <div class="bg-white py-4">
-        <div class="container mx-auto px-4 lg:px-0">
+        <div class="container mx-auto px-3 lg:px-0">
             <div class="mb-6 flex items-center justify-between">
                 <div>
                     <b class="text-2xl capitalize">Search Results for "{{ searchQuery }}"</b>

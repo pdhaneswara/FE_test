@@ -18,7 +18,7 @@ onMounted(async () => {
             </div>
         </div>
         <div class="bg-white py-4 mt-4">
-            <div class="container mx-auto px-4 lg:px-0">
+            <div class="container mx-auto px-3 lg:px-0">
                 <div class="flex items-center justify-between mb-6">
                     <b class="text-2xl">All Product</b>
 

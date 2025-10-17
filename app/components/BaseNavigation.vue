@@ -45,13 +45,13 @@ const handleBlur = () => {
 
 <template>
   <header class="py-4 header-shadow sticky top-0 bg-white">
-    <nav class="flex container mx-auto items-center px-4 lg:px-0">
+    <nav class="flex container mx-auto items-center px-3 lg:px-0">
       <div class="flex items-center">
         <NuxtLink to="/" class="flex gap-1 items-center">
           <NuxtImg width="56px" src="/icon-green.png" format="webp" alt="" />
-          <span class="text-3xl font-bold">Nuxt Stores</span>
+          <span class="hidden md:block lg:text-3xl md:text-2xl font-bold">Nuxt Stores</span>
         </NuxtLink>
-        <ul class="flex items-center gap-6 ml-4 capitalize">
+        <ul class="hidden md:flex items-center gap-6 md:gap-3 mx-4 capitalize">
           <li>
             <NuxtLink to="/category/men's%20clothing">Men</NuxtLink>
           </li>
