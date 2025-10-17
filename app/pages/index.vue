@@ -1,23 +1,28 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { useProducts } from '../composables/useProducts'
 import { useCategories } from '../composables/useCategories'
+
+const router = useRouter()
 
 const { products, loading: loadingProducts, fetchProducts } = useProducts()
 const { categories, loading: loadingCategories, fetchCategories } = useCategories()
 
 const selectedCategory = ref('all')
 
-// Fetch on mount
+// Fetch data on mount
 onMounted(async () => {
   await fetchCategories()
   await fetchProducts()
 })
 
-// Handle category change
-const handleCategoryChange = async (e: Event) => {
-  selectedCategory.value = (e.target as HTMLSelectElement).value
-  await fetchProducts(selectedCategory.value)
+// Handle dropdown change → navigate to category page
+const handleCategoryChange = (e: Event) => {
+  const value = (e.target as HTMLSelectElement).value
+  selectedCategory.value = value
+  if (value === 'all') router.push('/')
+  else router.push(`/category/${value}`)
 }
 </script>
 
@@ -30,16 +35,18 @@ const handleCategoryChange = async (e: Event) => {
         </div>
         <div class="bg-white py-4 mt-4">
             <div class="container mx-auto">
-                <div class="flex items-center justify-between">
+                <div class="flex items-center justify-between mb-6">
                     <b class="text-2xl">All Product</b>
+
                     <!-- Category Dropdown -->
-                    <div class="mb-6">
+                    <div>
                         <select
                         class="border border-gray-300 rounded-lg px-4 py-2 text-gray-700"
                         @change="handleCategoryChange"
+                        v-model="selectedCategory"
                         >
                         <option value="all">All Categories</option>
-                        <option
+                        <option class="capitalize"
                             v-for="cat in categories"
                             :key="cat"
                             :value="cat"
@@ -49,12 +56,6 @@ const handleCategoryChange = async (e: Event) => {
                         </select>
                     </div>
                 </div>
-                <!-- <div class="grid grid-cols-4 gap-4 mt-4">
-                    <div 
-                        v-for="product in products"
-                        :key="product.id"
-                    >01</div>
-                </div> -->
                 <!-- Loading -->
                 <div v-if="loadingProducts || loadingCategories" class="text-gray-500 text-center py-10">
                     Loading...
