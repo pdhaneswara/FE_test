@@ -35,8 +35,8 @@ const displayEnd = computed(() =>
                 <div>
                     <b class="text-2xl capitalize">{{ selectedCategory }} Product</b>
                     <p v-if="!loading && products.length" class="text-gray-600 text-sm">
-                        Displaying <b>{{ displayStart }}</b> - <b>{{ displayEnd }}</b> of
-                        <b>{{ products.length }}</b> products
+                        Displaying <b class="text-emerald-500">{{ displayStart }}</b> - <b class="text-emerald-500">{{ displayEnd }}</b> of
+                        <b class="text-emerald-500">{{ products.length }}</b> products
                     </p>
                 </div>
                 <CategoryDropdown v-model:selectedCategory="selectedCategory" />

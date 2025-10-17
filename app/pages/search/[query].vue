@@ -59,8 +59,8 @@ const displayEnd = computed(() =>
                 <div>
                     <b class="text-2xl capitalize">Search Results for "{{ searchQuery }}"</b>
                     <p v-if="!loading && filteredProducts.length" class="text-gray-600 text-sm">
-                        Displaying <b>{{ displayStart }}</b> - <b>{{ displayEnd }}</b> of
-                        <b>{{ filteredProducts.length }}</b> products
+                        Displaying <b class="text-emerald-500">{{ displayStart }}</b> - <b class="text-emerald-500">{{ displayEnd }}</b> of
+                        <b class="text-emerald-500">{{ filteredProducts.length }}</b> products
                     </p>
                 </div>
             </div>
@@ -75,7 +75,7 @@ const displayEnd = computed(() =>
 
             <div v-else class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 <NuxtLink
-                    v-for="product in products"
+                    v-for="product in filteredProducts"
                     :key="product.id"
                     class="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition"
                     :to="`/product/${product.id}`"
