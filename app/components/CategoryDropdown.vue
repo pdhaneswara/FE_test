@@ -34,14 +34,14 @@ const handleCategoryChange = (event: Event) => {
 </script>
 
 <template>
-  <select
-    class="border border-gray-300 rounded-lg px-4 py-2 text-gray-700"
-    v-model="localCategory"
-    @change="handleCategoryChange"
-  >
+  <select v-model="localCategory" @change="handleCategoryChange" class="border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 text-gray-700 dark:text-gray-100
+           bg-white dark:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-blue-400
+           transition-colors duration-300 cursor-pointer">
     <option value="all">All Categories</option>
-    <option class="capitalize" v-for="cat in categories" :key="cat" :value="cat">
+    <option v-for="cat in categories" :key="cat" :value="cat"
+      class="capitalize bg-white dark:bg-neutral-800 text-gray-700 dark:text-gray-100">
       {{ cat }}
     </option>
   </select>
 </template>
+
