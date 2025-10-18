@@ -14,7 +14,7 @@ onMounted(async () => {
     <div>
         <div class="bg-white py-4">
             <div class="container mx-auto">
-                <img src="https://picsum.photos/id/10/1200/400" alt="home" class="w-full" />
+                <img src="https://picsum.photos/id/10/1200/400" alt="home" class="w-full rounded-none md:rounded-lg overflow-hidden" />
             </div>
         </div>
         <div class="bg-white py-4 mt-4">
