@@ -40,7 +40,7 @@ const handleSearch = (query?: string) => {
   // Navigate to /search/:query
   router.push(`/search/${encodeURIComponent(finalQuery)}`)
 
-  // ✅ Reset search input and hide suggestions
+  // Reset search input and hide suggestions
   searchQuery.value = ''
   showSuggestions.value = false
   isMobileMenuOpen.value = false
