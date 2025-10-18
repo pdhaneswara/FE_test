@@ -31,7 +31,7 @@ onMounted(fetchProduct)
   <div class="bg-white py-4">
     <div class="container mx-auto px-3 lg:px-0">
 
-      <!-- 🧭 Breadcrumb -->
+      <!-- Breadcrumb -->
       <nav class="text-sm mb-6 text-gray-500">
         <NuxtLink to="/" class="hover:text-blue-600">Home</NuxtLink>
         <span v-if="product" class="mx-2">›</span>
@@ -79,7 +79,7 @@ onMounted(fetchProduct)
           </div>
 
           <div class="flex items-center mb-6">
-            <span class="text-yellow-500 text-lg mr-2">⭐</span>
+            <span class="text-yellow-500 text-3xl mr-2">&#9733;</span>
             <span class="text-gray-700 font-medium">
               {{ product.rating?.rate }} / 5 ({{ product.rating?.count }} reviews)
             </span>
