@@ -3,6 +3,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { $fetch } from 'ofetch'
+import { useMobileMenu } from '../../composables/useMobileMenu'
 
 const route = useRoute()
 const router = useRouter()
@@ -10,6 +11,7 @@ const router = useRouter()
 const product = ref<any>(null)
 const loading = ref(true)
 const error = ref('')
+const { isMobileMenuOpen } = useMobileMenu()
 
 // Fetch product details
 const fetchProduct = async () => {
@@ -35,11 +37,7 @@ onMounted(fetchProduct)
       <nav class="text-sm mb-6 text-gray-500">
         <NuxtLink to="/" class="hover:text-blue-600">Home</NuxtLink>
         <span v-if="product" class="mx-2">›</span>
-        <NuxtLink
-          v-if="product"
-          :to="`/category/${product.category}`"
-          class="capitalize hover:text-blue-600"
-        >
+        <NuxtLink v-if="product" :to="`/category/${product.category}`" class="capitalize hover:text-blue-600">
           {{ product.category }}
         </NuxtLink>
         <span v-if="product" class="mx-2">›</span>
@@ -54,11 +52,7 @@ onMounted(fetchProduct)
       <div v-else class="grid md:grid-cols-5 gap-10">
         <!-- Product Image -->
         <div class="flex justify-center items-center bg-gray-100 rounded-lg p-6 md:col-span-2">
-          <img
-            :src="product.image"
-            :alt="product.title"
-            class="object-contain h-80 w-full"
-          />
+          <img :src="product.image" :alt="product.title" class="object-contain h-80 w-full" />
         </div>
 
         <!-- Product Details -->
@@ -71,11 +65,6 @@ onMounted(fetchProduct)
 
           <div class="flex items-center justify-between mb-6">
             <span class="text-3xl font-semibold text-green-600">${{ product.price }}</span>
-            <!-- <span
-              class="text-sm font-medium bg-gray-100 text-gray-700 px-3 py-1 rounded-full capitalize"
-            >
-              {{ product.category }}
-            </span> -->
           </div>
 
           <div class="flex items-center mb-6">
@@ -85,10 +74,9 @@ onMounted(fetchProduct)
             </span>
           </div>
 
-          <div class="flex gap-4">
-            <button
-              class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition w-full"
-            >
+          <div v-if="!isMobileMenuOpen" class="flex gap-4">
+            <button disabled
+              class="bg-gray-400 text-white px-6 py-2 rounded-lg transition w-full cursor-not-allowed opacity-70">
               Sold Out!
             </button>
           </div>

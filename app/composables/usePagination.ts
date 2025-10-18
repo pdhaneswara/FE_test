@@ -7,7 +7,7 @@ export function usePagination<T extends Record<string, any>>(items: Ref<T[]>, pe
   const router = useRouter()
 
   const currentPage = ref(Number(route.query.page) || 1)
-  const sortOption = ref<'default' | 'priceAsc' | 'priceDesc'>('default')
+  const sortOption = ref<'default' | 'priceAsc' | 'priceDesc' | 'ratingAsc' | 'ratingDesc'>('default')
 
   // Watch for page query changes
   watch(
@@ -28,7 +28,9 @@ export function usePagination<T extends Record<string, any>>(items: Ref<T[]>, pe
     currentPage.value = p
   }
 
-  const updateSort = (option: 'default' | 'priceAsc' | 'priceDesc') => {
+  const updateSort = (
+    option: 'default' | 'priceAsc' | 'priceDesc' | 'ratingAsc' | 'ratingDesc'
+  ) => {
     sortOption.value = option
     currentPage.value = 1 // reset to first page when sorting changes
   }
@@ -40,6 +42,10 @@ export function usePagination<T extends Record<string, any>>(items: Ref<T[]>, pe
         return arr.sort((a, b) => (a.price ?? 0) - (b.price ?? 0))
       case 'priceDesc':
         return arr.sort((a, b) => (b.price ?? 0) - (a.price ?? 0))
+      case 'ratingAsc':
+        return arr.sort((a, b) => (a.rating?.rate ?? 0) - (b.rating?.rate ?? 0))
+      case 'ratingDesc':
+        return arr.sort((a, b) => (b.rating?.rate ?? 0) - (a.rating?.rate ?? 0))
       default:
         return arr
     }

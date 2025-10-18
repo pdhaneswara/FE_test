@@ -48,7 +48,7 @@ const {
     <div class="container mx-auto px-3 lg:px-0">
       <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-          <h2 class="text-2xl font-bold capitalize">{{ selectedCategory }} Products</h2>
+          <h1 class="text-lg md:text-2xl font-bold capitalize">{{ selectedCategory }} Products</h1>
           <p v-if="!loading && products.length" class="text-gray-600 text-sm">
             Displaying
             <b class="text-emerald-500">{{ displayStart }}</b> -
@@ -69,8 +69,10 @@ const {
             class="border border-gray-300 rounded-lg px-4 py-2 text-gray-700"
           >
             <option value="default">Default</option>
-            <option value="priceAsc">Price: Low → High</option>
-            <option value="priceDesc">Price: High → Low</option>
+            <option value="priceAsc">Price: Low &#8594; High</option>
+            <option value="priceDesc">Price: High &#8594; Low</option>
+            <option value="ratingAsc">Rating: Low &#8594; High</option>
+            <option value="ratingDesc">Rating: High &#8594; Low</option>
           </select>
         </div>
       </div>
@@ -97,8 +99,13 @@ const {
             class="w-full h-48 object-contain p-4 bg-gray-100"
           />
           <div class="p-4">
-            <h2 class="text-lg font-semibold mb-2 truncate">{{ product.title }}</h2>
-            <p class="text-gray-600 text-sm line-clamp-2 mb-3">{{ product.description }}</p>
+            <h2 class="text-lg font-semibold mb-1 truncate">{{ product.title }}</h2>
+            <div class="flex items-center">
+                <span class="text-yellow-500 text-lg mr-1">&#9733;</span>
+                <span class="text-gray-700 font-medium text-sm">
+                {{ product.rating?.rate }}
+                </span>
+            </div>
             <div class="flex justify-between items-center">
               <span class="text-lg font-bold text-green-600">${{ product.price }}</span>
               <span class="text-sm text-gray-500 capitalize">{{ product.category }}</span>

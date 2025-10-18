@@ -49,7 +49,7 @@ const {
     <div class="container mx-auto px-3 lg:px-0">
       <div class="mb-6 flex items-center justify-between">
         <div>
-          <b class="text-2xl capitalize">Search Results for "{{ searchQuery }}"</b>
+          <h1 class="text-lg md:text-2xl font-bold capitalize">Search Results for "{{ searchQuery }}"</h1>
           <p v-if="!loading && filteredProducts.length" class="text-gray-600 text-sm">
             Displaying
             <b class="text-emerald-500">{{ displayStart }}</b> -
@@ -77,8 +77,13 @@ const {
           :to="`/product/${product.id}`">
           <img :src="product.image" alt="product.title" class="w-full h-48 object-contain p-4 bg-gray-100" />
           <div class="p-4">
-            <h2 class="text-lg font-semibold mb-2 truncate">{{ product.title }}</h2>
-            <p class="text-gray-600 text-sm line-clamp-2 mb-3">{{ product.description }}</p>
+            <h2 class="text-lg font-semibold mb-1 truncate">{{ product.title }}</h2>
+            <div class="flex items-center">
+                <span class="text-yellow-500 text-lg mr-1">&#9733;</span>
+                <span class="text-gray-700 font-medium text-sm">
+                {{ product.rating?.rate }}
+                </span>
+            </div>
             <div class="flex justify-between items-center">
               <span class="text-lg font-bold text-green-600">${{ product.price }}</span>
               <span class="text-sm text-gray-500 capitalize">{{ product.category }}</span>
